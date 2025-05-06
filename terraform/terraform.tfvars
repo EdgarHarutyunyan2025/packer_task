@@ -30,7 +30,7 @@ health_check_type = "ELB"
 #======= Launch Template ======= 
 
 instance_type = "t2.micro"
-user_data     = "../web/user_data.sh"
+user_data     = "./web/user_data.sh"
 lt_name       = "LT-FOR-PACKER-TEST"
 
 #======= Autoscaling Policy =======
