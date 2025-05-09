@@ -30,10 +30,10 @@ resource "aws_default_subnet" "default_az2" {
 data "aws_availability_zones" "working" {}
 
 data "aws_ami" "amazon_linux_latest" {
-  owners      = ["amazon"]
+  owners      = ["self"]
   most_recent = true
   filter {
-    name   = "name"
-    values = ["amzn2-ami-kernel-*"]
+    name   = "tag:Name"
+    values = ["packer-example-Ansible*"]
   }
 }

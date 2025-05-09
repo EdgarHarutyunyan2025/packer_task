@@ -1,0 +1,37 @@
+---
+- name: Update ec2 instances
+  hosts: all
+  gather_facts: yes
+  become: true
+
+  vars:
+    source_file: ./web/index.html
+    dest_file: /var/www/html/index.html
+
+  tasks:
+
+    - name: install tree
+      yum: name=tree state=present
+
+    - name: install stress
+      yum: name=stress state=present
+
+
+    - name: install Apache
+      yum: name=httpd state=present
+
+        #    - name: generete file
+        #      template: src={{source_file}} dest={{dest_file}}
+        #      notify: Restart Apache
+
+    - name: Cpoy  file
+      copy: src={{source_file}} dest={{dest_file}}
+      notify: Restart Apache
+
+    - name: Start Apache for RedHat
+      service: name=httpd state=started   enabled=yes
+  
+
+  handlers:
+    - name: Restart Apache
+      service: name=httpd state=restarted

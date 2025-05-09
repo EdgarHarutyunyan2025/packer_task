@@ -15,6 +15,15 @@ variable "tg_name" {}
 variable "tg_port" {}
 variable "tg_protocol" {}
 variable "tg_deregistration_delay" {}
+
+variable "health_check_path" {}
+variable "health_check_protocol" {}
+variable "health_check_matcher" {}
+variable "health_check_interval" {}
+variable "health_check_timeout" {}
+variable "healthy_threshold" {}
+variable "unhealthy_threshold" {}
+
 variable "listener_port" {}
 variable "listener_protocol" {}
 variable "default_action_type" {}
@@ -35,8 +44,16 @@ variable "health_check_type" {}
 
 
 variable "instance_type" {}
-variable "user_data" {}
 variable "lt_name" {}
+variable "user_data" {}
+
+variable "my_tags" {
+  type = map(string)
+  default = {
+    Name  = "SERVER TEST FROM PACKER"
+    Owner = "Edgar"
+  }
+}
 
 
 #======= Autoscaling Policy =======

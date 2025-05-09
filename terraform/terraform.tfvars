@@ -14,24 +14,33 @@ tg_name                 = "TG-FOR-PACKER-TEST"
 tg_port                 = 80
 tg_protocol             = "HTTP"
 tg_deregistration_delay = 10
-listener_port           = 80
-listener_protocol       = "HTTP"
-default_action_type     = "forward"
+
+health_check_path     = "/"
+health_check_protocol = "HTTP"
+health_check_matcher  = "200-399"
+health_check_interval = 30
+health_check_timeout  = 5
+healthy_threshold     = 3
+unhealthy_threshold   = 2
+
+listener_port       = 80
+listener_protocol   = "HTTP"
+default_action_type = "forward"
 
 #======= Autoscaling Group =======
 
 versions          = 1
-min_size          = 1
-max_size          = 2
-desired_capacity  = 1
+min_size          = 2
+max_size          = 4
+desired_capacity  = 2
 min_elb_capacity  = 1
 health_check_type = "ELB"
 
 #======= Launch Template ======= 
 
 instance_type = "t2.micro"
-user_data     = "./web/user_data.sh"
 lt_name       = "LT-FOR-PACKER-TEST"
+user_data     = "./user_data/user_data.sh"
 
 #======= Autoscaling Policy =======
 
