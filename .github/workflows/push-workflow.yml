@@ -28,7 +28,7 @@ jobs:
 
     - name: Run Packer Build image
       run: |
-        cd /packer_image/
+        cd packer_image
         packer init . && ./packer_image/build_ami_version.sh
 
     - name: Terraform refresh
