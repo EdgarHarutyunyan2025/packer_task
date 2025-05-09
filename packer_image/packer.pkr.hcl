@@ -38,7 +38,7 @@ build {
   ]
 
     provisioner "ansible" {
-   playbook_file = "../packer_task/ansible/playbook.yml"
+   playbook_file = "../ansible/playbook.yml"
   }
 }
 
