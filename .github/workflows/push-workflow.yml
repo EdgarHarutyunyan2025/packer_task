@@ -1,0 +1,31 @@
+name: Build and update an Amazon Machine Image (AMI) using Packer.
+
+on:
+  push:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials using OIDC
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::877680973630:role/Packer-role-AMI
+        aws-region: eu-central-1 
+
+    - name: Update Servers using Ansible
+      run: |
+        cd ./ansible
+        ansible-playbook playbook.yml
+
+    - name: Run Packer Build image
+      run: ./packer_image/build_ami_version.sh
+
