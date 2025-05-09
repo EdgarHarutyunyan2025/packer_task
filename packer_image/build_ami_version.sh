@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TF_DIR="../packer_task/terraform"
+TF_DIR="../terraform"
 
 AMI_ID=$(terraform -chdir="$TF_DIR" output -raw ami_latest 2>/dev/null)
 
