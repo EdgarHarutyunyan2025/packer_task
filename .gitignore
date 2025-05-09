@@ -1,2 +1,3 @@
 .terraform
 dynamic_inventori
+packer-ssh-key.pem
