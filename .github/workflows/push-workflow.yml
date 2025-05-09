@@ -27,5 +27,7 @@ jobs:
         ansible-playbook playbook.yml
 
     - name: Run Packer Build image
-      run: ./packer_image/build_ami_version.sh
+      run: |
+        cd packer_image/
+        ./build_ami_version.sh
 
