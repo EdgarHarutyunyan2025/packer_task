@@ -16,7 +16,9 @@ jobs:
       uses: actions/checkout@v3
 
     - name: ls
-      run: ls
+      run: |
+        ls
+        ll ansible
 
     - name: Configure AWS credentials using OIDC
       uses: aws-actions/configure-aws-credentials@v2
