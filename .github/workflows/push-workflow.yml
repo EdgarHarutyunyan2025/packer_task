@@ -24,10 +24,17 @@ jobs:
     - name: Update Servers using Ansible
       run: |
         cd ./ansible
+        python3 -m venv dynamic_inventory
+        source dynamic_inventori/bin/activate
+        pip install ansible
+        pip install boto3 
+        pip install botocore
+        ansible-inventory --list
         ansible-playbook playbook.yml
 
     - name: Run Packer Build image
       run: |
         cd packer_image/
+        packer init .
         ./build_ami_version.sh
 
