@@ -25,7 +25,7 @@ jobs:
       run: |
         cd ./ansible
         python3 -m venv dynamic_inventory
-        source dynamic_inventori/bin/activate
+        source dynamic_inventory/bin/activate
         pip install ansible
         pip install boto3 
         pip install botocore
