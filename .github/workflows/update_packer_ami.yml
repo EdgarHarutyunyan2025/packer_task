@@ -43,6 +43,9 @@ jobs:
         path: new_version_ami.txt
 
 
+    - name: Remove AMI in AWS
+      run: python3 remove_aws_ami.py
+
     - name: Send plan to Packer Image (as file)
       if: steps.build_image.outcome == 'success'
       uses: appleboy/telegram-action@master
