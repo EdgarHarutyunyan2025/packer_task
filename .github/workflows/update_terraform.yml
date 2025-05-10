@@ -2,7 +2,7 @@ name: PR Terraform Plan
 
 on:
   push:
-    path:
+    paths:
       - "terraform/*"
       - ".github/workflows/update_terraform.yml"
 

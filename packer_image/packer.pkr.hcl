@@ -28,7 +28,7 @@ source "amazon-ebs" "example" {
   ssh_username  = "ec2-user"
   ami_name      = "packer-ami-{{timestamp}}"
   tags = {
-    Name = format("packer-example-Ansible-%s", var.ami_version)
+    Name = format("packer-example-commit->%s", var.ami_version)
   }
 }
 

@@ -18,5 +18,5 @@ if [[ "$AMI_ID" =~ ^ami- ]]; then
   packer build -var "ami_version=$NEW_VERSION" -var "source_ami=$AMI_ID"  packer.pkr.hcl
 else
   echo "Build Default Version !"
-  packer build packer.pkr.hcl
+  packer build -var "ami_version=$NEW_VERSION"   packer.pkr.hcl
 fi
