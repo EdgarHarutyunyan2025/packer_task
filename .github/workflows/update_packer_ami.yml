@@ -29,7 +29,7 @@ jobs:
       id: build_image
       run: |
         cd packer_image
-        packer init . && ./build_ami_version.sh
+        packer init . && ./build_ami_version.sh > new_version.txt
 
 
     - name: Upload Terraform Plan
