@@ -2,6 +2,10 @@ name: Build and update an Amazon Machine Image (AMI) using Packer.
 
 on:
   push:
+    paths:
+      - "ansible/*"
+      - "packer_image/*"
+      - ".github/*"
 
 permissions:
   id-token: write
@@ -15,11 +19,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: ls
-      run: |
-        ls
-        ls ./ansible
-
     - name: Configure AWS credentials using OIDC
       uses: aws-actions/configure-aws-credentials@v2
       with:
@@ -31,7 +30,3 @@ jobs:
         cd packer_image
         packer init . && ./build_ami_version.sh
 
-    - name: Terraform refresh
-      run: |
-        cd terraform
-        terraform refresh
