@@ -15,6 +15,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: packer_image
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
@@ -27,27 +31,25 @@ jobs:
 
     - name: Run Packer Build image
       id: build_image
-      run: |
-        cd packer_image
-        packer init . && ./build_ami_version.sh > new_version.txt
+      run: packer init . && ./build_ami_version.sh > new_version_ami.txt
 
 
-    - name: Upload Terraform Plan
+    - name: Upload Packer Build 
       id: upload
       if: steps.build_image.outcome == 'success'
       uses: actions/upload-artifact@v4
       with:
-        name: terraform-plan
-        path: new_version.txt
+        name: Packer Build Image
+        path: new_version_ami.txt
 
 
-    - name: Send plan to Telegram (as file)
+    - name: Send plan to Packer Image (as file)
       if: steps.build_image.outcome == 'success'
       uses: appleboy/telegram-action@master
       with:
         to: ${{ secrets.TELEGRAM_CHAT_ID }}
         token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        document: new_version.txt
+        document: packer_image/new_version_ami.txt
         message: "✅ Packer Image Build Success."
 
     - name: Send Telegram message
