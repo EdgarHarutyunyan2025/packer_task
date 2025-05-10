@@ -26,7 +26,35 @@ jobs:
         aws-region: eu-central-1 
 
     - name: Run Packer Build image
+      id: build_image
       run: |
         cd packer_image
         packer init . && ./build_ami_version.sh
+
+
+    - name: Upload Terraform Plan
+      id: upload
+      if: steps.build_image.outcome == 'success'
+      uses: actions/upload-artifact@v4
+      with:
+        name: terraform-plan
+        path: new_version.txt
+
+
+    - name: Send plan to Telegram (as file)
+      if: steps.build_image.outcome == 'success'
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        document: new_version.txt
+        message: "✅ Packer Image Build Success."
+
+    - name: Send Telegram message
+      if: steps.build_image.outcome != 'success'
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        message: "❌ Packer Image Build Failed."
 

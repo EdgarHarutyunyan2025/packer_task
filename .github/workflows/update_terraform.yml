@@ -4,6 +4,7 @@ on:
   push:
     path:
       - "terraform/*"
+      - ".github/workflows/update_terraform.yml"
 
 jobs:
   build-and-plan:
@@ -48,7 +49,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: terraform-plan
-          path: backend-plan.txt
+          path: terraform-plan.txt
 
 
       - name: Send plan to Telegram (as file)
@@ -57,8 +58,8 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          document: backend-plan.txt
-          message: "✅ Terraform plan was successful for Opened PR in Backend."
+          document: terraform-plan.txt
+          message: "✅ Terraform plan was successful !"
 
       - name: Send Telegram message
         if: steps.refresh.outcome != 'success' || steps.plan.outcome != 'success'
@@ -66,5 +67,5 @@ jobs:
         with: 
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: "❌ Terraform plan failed for Opened PR in Backend. Please check the GitHub Actions logs."
+          message: "❌ Terraform plan failed !"
 
