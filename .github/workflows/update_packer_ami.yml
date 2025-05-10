@@ -5,7 +5,7 @@ on:
     paths:
       - "ansible/*"
       - "packer_image/*"
-      - ".github/*"
+      - ".github/workflows/update_packer_ami.yml"
 
 permissions:
   id-token: write
