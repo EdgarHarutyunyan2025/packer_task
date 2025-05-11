@@ -23,10 +23,22 @@ variable "source_ami" {
 
 source "amazon-ebs" "example" {
   region        = "eu-central-1"
-  source_ami = var.source_ami
+  #  source_ami = var.source_ami
   instance_type = "t2.micro"
   ssh_username  = "ec2-user"
   ami_name      = "packer-ami-{{timestamp}}"
+
+  source_ami_filter {
+    filters = {
+      name                = "packer-ami-*"
+      root-device-type    = "ebs"
+      virtualization-type = "hvm"
+    }
+    owners      = ["self"]
+    most_recent = true
+  }
+
+
   tags = {
     Name = format("packer-example-commit->%s", var.ami_version)
   }

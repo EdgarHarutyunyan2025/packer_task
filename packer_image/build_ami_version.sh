@@ -1,9 +1,5 @@
 #!/bin/bash
 
-TF_DIR="../terraform"
-
-AMI_ID=$(terraform -chdir="$TF_DIR" output -raw ami_latest 2>/dev/null)
-
 
 if [ -n "$GITHUB_SHA" ]; then
   NEW_VERSION="${GITHUB_SHA:0:7}"
@@ -11,12 +7,18 @@ else
   NEW_VERSION="local-build"
 fi
 
+AMI_ID=$(aws ec2 describe-images \
+  --owners self \
+  --region "eu-central-1" \
+  --query "Images[*].{Name:Name,ID:ImageId,Created:CreationDate}" \
+  --output text)
 
-if [[ "$AMI_ID" =~ ^ami- ]]; then	
-  echo "Using AMI_ID from Terraform: $AMI_ID"
-  echo "Building AMI version: $NEW_VERSION"
-  packer build -var "ami_version=$NEW_VERSION" -var "source_ami=$AMI_ID"  packer.pkr.hcl
+
+if [[ "$AMI_ID" == "None" || -z "$AMI_ID" ]]; then
+  echo "❌ AMI не найдена. Нужно создать первую."
+  packer build -var="ami_version=$NEW_VERSION"  default_packer_ami.pkr.hcl
 else
-  echo "Build Default Version !"
-  packer build -var "ami_version=$NEW_VERSION"   packer.pkr.hcl
+  echo "✅ Найдена последняя AMI: $AMI_ID"
+  packer build -var="ami_version=$NEW_VERSION"  new_packer_ami.pkr.hcl
 fi
+
