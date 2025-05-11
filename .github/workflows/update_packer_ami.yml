@@ -31,7 +31,7 @@ jobs:
 
     - name: Run Packer Build image
       id: build_image
-      run: packer init . && ./build_ami_version.sh > new_version_ami.txt
+      run: ./build_ami_version.sh > new_version_ami.txt
 
 
     - name: Upload Packer Build 
