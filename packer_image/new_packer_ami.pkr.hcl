@@ -16,14 +16,8 @@ variable "ami_version" {
 }
 
 
-variable "source_ami" {
-  default = "ami-009082a6cd90ccd0e"
-}
-
-
 source "amazon-ebs" "example" {
   region        = "eu-central-1"
-  #  source_ami = var.source_ami
   instance_type = "t2.micro"
   ssh_username  = "ec2-user"
   ami_name      = "packer-ami-{{timestamp}}"
