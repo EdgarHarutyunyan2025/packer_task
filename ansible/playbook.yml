@@ -30,7 +30,7 @@
 
     - name: Start Apache for RedHat
       service: name=httpd state=started   enabled=yes
-  
+
 
   handlers:
     - name: Restart Apache

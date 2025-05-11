@@ -34,6 +34,6 @@ data "aws_ami" "amazon_linux_latest" {
   most_recent = true
   filter {
     name   = "tag:Name"
-    values = ["packer-example-Ansible*"]
+    values = ["packer-exampl*"]
   }
 }
