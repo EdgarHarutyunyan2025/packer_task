@@ -67,6 +67,6 @@ threshold_low            = 20
 
 #======= SNS Topic =======
 
-sns_name     = "cpu-alerts-topic"
+sns_name     = "cpu-alert-topics"
 sns_protocol = "email"
 sns_endpoint = "edgar_harutyunyan_2025@bk.ru"
