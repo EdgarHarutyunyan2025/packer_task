@@ -38,5 +38,15 @@ build {
   sources = [
     "source.amazon-ebs.example"
   ]
+
+  provisioner "shell" {
+  inline = [
+    "sudo yum update -y",
+    "sudo yum install -y httpd",
+    "sudo systemctl enable httpd",
+    "echo '<h1>Hello from Packer AMI</h1>' | sudo tee /var/www/html/index.html"
+    ]
+  }
+
 }
 
