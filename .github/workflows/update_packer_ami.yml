@@ -43,11 +43,17 @@ jobs:
         name: Packer Build Image
         path: new_version_ami.txt
 
-    - name: Terraaform apply
-      run: |
-        cd ../terraform/
-        terraform init
-        terraform apply
+
+    - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init and Apply
+        working-directory: .../terraform/
+        run: |
+          terraform init
+          terraform apply -auto-approve
+
+
 
     - name: Remove AMI in AWS
       run: python3 remove_aws_ami.py
