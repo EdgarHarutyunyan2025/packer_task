@@ -24,6 +24,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+
+    - name: Terraaform apply
+      run: |
+        cd ../terraform/
+        ls
+
     - name: Configure AWS credentials using OIDC
       uses: aws-actions/configure-aws-credentials@v2
       with:
