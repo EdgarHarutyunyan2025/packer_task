@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "ansible/*"
+      - "ansible/web/*"
       - "packer_image/*"
       - ".github/workflows/update_packer_ami.yml"
 
