@@ -1,10 +1,16 @@
 name: PR Terraform Plan
 
+  #on:
+  #  push:
+  #    paths:
+  #      - "terraform/*"
+  #      - ".github/workflows/update_terraform.yml"
+
+
 on:
-  push:
-    paths:
-      - "terraform/*"
-      - ".github/workflows/update_terraform.yml"
+  repository_dispatch:
+    types: [front-changed]
+
 
 jobs:
   build-and-plan:
